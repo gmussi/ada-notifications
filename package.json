@@ -1,0 +1,25 @@
+{
+  "name": "gmussi-ada-notifications",
+  "version": "1.0.0",
+  "description": "Push notifications for interesting events in your Cardano wallet",
+  "main": "index.js",
+  "scripts": {
+    "run-node": "node index.js",
+    "run-docker": "docker run --env-file=.env docker.io/gmussi/gmussi-ada-notifications",
+    "build": "docker build -t docker.io/gmussi/gmussi-ada-notifications:latest -t docker.io/gmussi/gmussi-ada-notifications:1.0.0 .",
+    "deploy": "docker push docker.io/gmussi/gmussi-ada-notifications"
+  },
+  "keywords": [
+    "cardano",
+    "ada",
+    "blockchain"
+  ],
+  "author": "Guilherme Mussi <gmussi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "mongodb": "^4.0.1",
+    "nodemailer": "^6.6.3"
+  }
+}
