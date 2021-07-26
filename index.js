@@ -24,8 +24,7 @@ const onNewReward = async (reward) => {
 const initMongo = async () => {
     // connect to mongo and check and load entries
     //let uri = `mongodb+srv://${constants.MONGODB_USER}:${constants.MONGODB_PASS}@${constants.MONGODB_URL}/ada?retryWrites=true&w=majority`;
-    let uri = `mongodb://${constants.MONGODB_USER}:${constants.MONGODB_PASS}@${constants.MONGODB_URL}:27017/`;
-    client = new MongoClient(uri);
+    client = new MongoClient(constants.MONGODB_URL);
     await client.connect();
     mongodb = client.db("ada");
     rewardsdb = mongodb.collection("rewards");

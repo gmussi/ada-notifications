@@ -17,11 +17,7 @@ This script is meant to be run as part of a cron job. An `.env` file must be pro
 
 **ADA_STAKE_KEY**= Your ada stake key in the berch32 format: `stake1uxv1234....`
 
-**MONGODB_USER**= Mongodb config
-
-**MONGODB_PASS**= Mongodb config
-
-**MONGODB_URL**= Mongodb config
+**MONGODB_URL**= Mongodb url containing username and password: `mongodb+srv://user:password@hostname/dbname?retryWrites=true&w=majority`
 
 **SMTP_USERNAME**= SMTP config
 

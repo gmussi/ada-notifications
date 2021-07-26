@@ -5,8 +5,6 @@ const BLOCKFROST_API_KEY = process.env.BLOCKFROST_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 const ADA_STAKE_KEY = process.env.ADA_STAKE_KEY;
 
-const MONGODB_USER = process.env.MONGODB_USER;
-const MONGODB_PASS = process.env.MONGODB_PASS;
 const MONGODB_URL = process.env.MONGODB_URL;
 
 const SMTP_USERNAME = process.env.SMTP_USERNAME;
@@ -32,8 +30,6 @@ module.exports = Object.freeze({
     BLOCKFROST_API_KEY,
     COINMARKETCAP_API_KEY,
     MONGODB_URL,
-    MONGODB_USER,
-    MONGODB_PASS,
     SMTP_USERNAME,
     SMTP_PASSWORD,
     SMTP_URL,
