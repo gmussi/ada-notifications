@@ -31,7 +31,10 @@ const initMongo = async () => {
 }
 
 const main = async () => {
+    console.log("Try to init mongodb.")
     await initMongo();
+
+    console.log("Mongodb started successfully.")
     
     // for each reward, check if any new rewards need to be inserted into the database
     let rewards = await wallet.getRewards();
@@ -47,6 +50,8 @@ const main = async () => {
     }
 
     await client.close();
+
+    console.log("Work is finished.")
 
 };
 

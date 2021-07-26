@@ -9,6 +9,12 @@ This script is meant to be run as part of a cron job. An `.env` file must be pro
    1. With node: `npm run run-node` 
    2. With docker: `npm run run-docker`
 
+## Using as a cronjob on a raspberry pi
+
+I personally use this tool as a cronjob on a raspberry pi with docker installed. 
+The file `run-cron.sh` is used to pull the latest image and run the code. 
+You might need to adjust it based on your local folder structure. 
+
 ## Environment variables needed and where to get them
 
 **BLOCKFROST_API_KEY**= Register on https://blockfrost.io/ to obtain an api key.
