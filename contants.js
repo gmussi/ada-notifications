@@ -1,6 +1,9 @@
 // Ensure necessary variables are present
 require('dotenv').config();
 
+const EMAIL_TO = process.env.EMAIL_TO;
+const EMAIL_FROM = process.env.EMAIL_FROM;
+
 const BLOCKFROST_API_KEY = process.env.BLOCKFROST_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 const ADA_STAKE_KEY = process.env.ADA_STAKE_KEY;
@@ -16,7 +19,9 @@ const SMTP_PORT = process.env.SMTP_PORT;
 const BLOCKFROST_ENDPOINT = `https://cardano-mainnet.blockfrost.io/api/v0`;
 const ADA_PRICE_ENDPOINT = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ADA`;
 
-module.exports = Object.freeze({   
+module.exports = Object.freeze({  
+    EMAIL_TO,
+    EMAIL_FROM, 
     ACCOUNTS_ENDPOINT : `${BLOCKFROST_ENDPOINT}/accounts/${ADA_STAKE_KEY}`,
     REWARDS_ENDPOINT : `${BLOCKFROST_ENDPOINT}/accounts/${ADA_STAKE_KEY}/rewards`,
     HISTORY_ENDPOINT : `${BLOCKFROST_ENDPOINT}/accounts/${ADA_STAKE_KEY}/history`,

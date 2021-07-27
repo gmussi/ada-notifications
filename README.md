@@ -27,6 +27,10 @@ You might need to adjust it based on your local folder structure.
 
 ## Environment variables needed and where to get them
 
+**EMAIL_TO**= Email to receive notifications
+
+**EMAIL_FROM**=Email to send notifications from. Must work with SMTP settings provided.
+
 **BLOCKFROST_API_KEY**= Register on https://blockfrost.io/ to obtain an api key.
 
 **COINMARKETCAP_API_KEY**= Register on https://coinmarketcap.com/ to obtain an api key.

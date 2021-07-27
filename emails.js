@@ -15,8 +15,8 @@ module.exports = {
     sendNewRewardEmail: async (reward) => {
         try {
             let info = await transporter.sendMail({
-                from: "Ada Script <hello@imagile.io>",
-                to: "gmussi@gmail.com",
+                from: `Ada Script <${constants.EMAIL_FROM}>`,
+                to: constants.EMAIL_TO,
                 subject: `New ada reward of ${reward.amount_num} for epoch ${reward.epoch}`,
                 text: JSON.stringify(reward),
                 html: JSON.stringify(reward)
@@ -31,8 +31,8 @@ module.exports = {
     sendBalanceChangeEmail: async (oldBalance, newBalance) => {
         try {
             let info = await transporter.sendMail({
-                from: "Ada Script <hello@imagile.io>",
-                to: "gmussi@gmail.com",
+                from: `Ada Script <${constants.EMAIL_FROM}>`,
+                to: constants.EMAIL_TO,
                 subject: `Your ADA balance changed from ${oldBalance} to ${newBalance}`,
                 text: JSON.stringify({oldBalance, newBalance}),
                 html: JSON.stringify({oldBalance, newBalance})
