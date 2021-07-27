@@ -1,8 +1,18 @@
 # Ada Notification Script
 
-This script is meant to be run as part of a cron job. An `.env` file must be provided with all the properties as listed below. The file `.env.example` provides the best way to get started.
+This script runs in a schedule and checks an ada wallet for updates.
+
+It notifies you when:
+ 
+* [x] You receive new rewards from staking
+* [x] Your account balance changes
+* [ ] When new deposits arrive
+* [ ] When you make withdrawals
 
 ## Usage
+
+This script is meant to be run as part of a cron job. An `.env` file must be provided with all the properties as listed below. The file `.env.example` provides the best way to get started.
+
 
 1. Copy the `.env.example` file to a `.env` file and fill in as explained below.
 2. Execute the script:

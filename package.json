@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "run-node": "node index.js",
-    "run-docker": "docker run --env-file=.env docker.io/gmussi/gmussi-ada-notifications",
-    "build": "docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t docker.io/gmussi/gmussi-ada-notifications:1.1.0 -t docker.io/gmussi/gmussi-ada-notifications:latest .",
-    "deploy": "docker push docker.io/gmussi/gmussi-ada-notifications"
+    "run-docker": "docker run --env-file=.env gmussi/gmussi-ada-notifications",
+    "deploy": "docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t gmussi/gmussi-ada-notifications:1.1.0 -t gmussi/gmussi-ada-notifications:latest --push ."
   },
   "keywords": [
     "cardano",
