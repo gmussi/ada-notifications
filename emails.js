@@ -24,7 +24,23 @@ module.exports = {
     
             console.log("Email sent", JSON.stringify(info));
         } catch (err) {
-            console.error("Error sending email", err);
+            console.error("Error sending new reward email", err);
+        }
+    },
+
+    sendBalanceChangeEmail: async (oldBalance, newBalance) => {
+        try {
+            let info = await transporter.sendMail({
+                from: "Ada Script <hello@imagile.io>",
+                to: "gmussi@gmail.com",
+                subject: `Your ADA balance changed from ${oldBalance} to ${newBalance}`,
+                text: JSON.stringify({oldBalance, newBalance}),
+                html: JSON.stringify({oldBalance, newBalance})
+            });
+    
+            console.log("Email sent", JSON.stringify(info));
+        } catch (err) {
+            console.error("Error sending balance change email", err);
         }
     }
 };
