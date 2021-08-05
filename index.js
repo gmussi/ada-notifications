@@ -4,9 +4,10 @@ const wallet = require("./wallet");
 const emails = require("./emails.js");
 const {MongoClient} = require('mongodb');
 
-let client;
+let client, mongodb;
 let rewardsdb;
 let balancedb;
+let transactionsdb;
 
 const onNewReward = async (reward) => {
     console.log("inserting new reward: ", JSON.stringify(reward));
@@ -39,20 +40,30 @@ const onBalanceChange = async (oldBalance, newBalance) => {
     }
 };
 
+const onNewTransaction = async (transaction) => {
+    try {
+        // insert new transaction on mongodb
+        await transactionsdb.insertOne(transaction);
+
+        console.log("new deposit found: " + transaction)
+        await emails.sendTransactionEmail(transaction);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 const initMongo = async () => {
     // connect to mongo and check and load entries
     client = new MongoClient(constants.MONGODB_URL);
     await client.connect();
     mongodb = client.db("ada");
+
     rewardsdb = mongodb.collection("rewards");
     balancedb = mongodb.collection("balance");
+    transactionsdb = mongodb.collection("transactionsdb");
 }
 
-const main = async () => {
-    console.log("Try to init mongodb.")
-    await initMongo();
-    console.log("Mongodb started successfully.")
-
+const checkRewards = async () => {
     // for each reward, check if any new rewards need to be inserted into the database
     console.log("Checking for rewards...");
     let rewards = await wallet.getRewards();
@@ -66,7 +77,9 @@ const main = async () => {
             await onNewReward(reward);
         }
     }
+};
 
+const checkBalance = async () => {
     // check for balance changes
     console.log("Check for balance changes...");
     let balance = await wallet.getBalance(); // find current balance
@@ -75,6 +88,33 @@ const main = async () => {
     if (!oldBalanceRecord || balance != oldBalanceRecord.amount) {
         await onBalanceChange(oldBalanceRecord, balance);
     }
+};
+
+const checkTransactions = async () => {
+    // check for all transactions
+    console.log("Check for transactions...");
+
+    let transactions = await wallet.getTransactions();
+
+    for (let transaction of transactions) {
+        let exists = await transactionsdb.findOne(transaction);
+
+        if (!exists) {
+            await onNewTransaction(transaction);
+        }
+    }
+};
+
+const main = async () => {
+    console.log("Try to init mongodb.")
+    await initMongo();
+    console.log("Mongodb started successfully.")
+
+    let promise1 = checkRewards();
+    let promise2 = checkBalance();
+    let promise3 = checkTransactions();
+    
+    await Promise.all([promise1, promise2, promise3]);
 
     await client.close();
 

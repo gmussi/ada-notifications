@@ -6,8 +6,7 @@ It notifies you when:
  
 * [x] You receive new rewards from staking
 * [x] Your account balance changes
-* [ ] When new deposits arrive
-* [ ] When you make withdrawals
+* [x] When a transaction is made
 
 ## Usage
 

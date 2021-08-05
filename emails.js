@@ -42,5 +42,21 @@ module.exports = {
         } catch (err) {
             console.error("Error sending balance change email", err);
         }
+    },
+
+    sendTransactionEmail: async (transaction) => {
+        try {
+            let info = await transporter.sendMail({
+                from: `Ada Script <${constants.EMAIL_FROM}>`,
+                to: constants.EMAIL_TO,
+                subject: `There was a deposit of ${transaction.amount_num} received`,
+                text: JSON.stringify(transaction),
+                html: JSON.stringify(transaction)
+            });
+    
+            console.log("Email sent", JSON.stringify(info));
+        } catch(err) {
+            console.error("Error sending transaction email", err);
+        }
     }
 };
