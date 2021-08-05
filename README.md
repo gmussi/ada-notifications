@@ -2,11 +2,15 @@
 
 This script runs in a schedule and checks an ada wallet for updates.
 
-It notifies you when:
+You receive notifications when:
  
 * [x] You receive new rewards from staking
 * [x] Your account balance changes
-* [x] When a transaction is made
+* [x] You make a transaction 
+* [ ] Your pool receives delegates
+* [ ] Your pool loses delegates
+* [ ] Your pool changes the tax fee
+
 
 ## Usage
 

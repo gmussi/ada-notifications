@@ -58,5 +58,58 @@ module.exports = {
         } catch(err) {
             console.error("Error sending transaction email", err);
         }
+    },
+
+    sendMarginChangedEmail: async (oldMargin, newMargin) => {
+        try {
+            let info = await transporter.sendMail({
+                from: `Ada Script <${constants.EMAIL_FROM}>`,
+                to: constants.EMAIL_TO,
+                subject: `Your pool changed margin from ${oldMargin}% to ${newMargin}%`,
+                text: JSON.stringify({oldMargin, newMargin}),
+                html: JSON.stringify({oldMargin, newMargin})
+            });
+    
+            console.log("Email sent", JSON.stringify(info));
+        } catch(err) {
+            console.error("Error sending margin changed email", err);
+        }
+    },
+
+    sendDelegatorsChangedEmail: async (oldDelegators, newDelegators) => {
+        try {
+            let info = await transporter.sendMail({
+                from: `Ada Script <${constants.EMAIL_FROM}>`,
+                to: constants.EMAIL_TO,
+                subject: 
+                    oldDelegators > newDelegators ?
+                    `Your pool lost ${oldDelegators - newDelegators} delegators and has ${newDelegators} delegators now` :
+                    `Your pool gained ${newDelegators - oldDelegators} delegators and has ${newDelegators} delegators now`
+                ,
+                text: JSON.stringify({oldDelegators, newDelegators}),
+                html: JSON.stringify({oldDelegators, newDelegators})
+            });
+    
+            console.log("Email sent", JSON.stringify(info));
+        } catch(err) {
+            console.error("Error sending margin changed email", err);
+        }
+    },
+
+    sendPoolChangedEmail: async (oldPoolTicker, newPoolTicker) => {
+        try {
+            let info = await transporter.sendMail({
+                from: `Ada Script <${constants.EMAIL_FROM}>`,
+                to: constants.EMAIL_TO,
+                subject: `Your pool changed from ${oldPoolTicker} to ${newPoolTicker}`
+                ,
+                text: JSON.stringify({oldPoolTicker, newPoolTicker}),
+                html: JSON.stringify({oldPoolTicker, newPoolTicker})
+            });
+    
+            console.log("Email sent", JSON.stringify(info));
+        } catch(err) {
+            console.error("Error sending margin changed email", err);
+        }
     }
 };
