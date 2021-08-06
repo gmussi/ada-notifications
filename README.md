@@ -7,9 +7,9 @@ You receive notifications when:
 * [x] You receive new rewards from staking
 * [x] Your account balance changes
 * [x] You make a transaction 
-* [ ] Your pool receives delegates
-* [ ] Your pool loses delegates
-* [ ] Your pool changes the tax fee
+* [x] Your pool receives delegates
+* [x] Your pool loses delegates
+* [x] Your pool changes the tax fee
 
 
 ## Usage
