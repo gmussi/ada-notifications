@@ -154,13 +154,10 @@ const main = async () => {
     
     let account = await wallet.getAccountDetails();
 
-    await Promise.all([
-        //checkRewards(), 
-        //checkBalance(), 
-        //checkTransactions(),
-        checkPoolChanges(account.pool_id)
-    ]);
-
+    await checkRewards();
+    await checkBalance();
+    await checkTransactions();
+    await checkPoolChanges(account.pool_id);
     await client.close();
 
     console.log("Work is finished.")

@@ -1,6 +1,6 @@
 {
   "name": "gmussi-ada-notifications",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Push notifications for interesting events in your Cardano wallet",
   "main": "index.js",
   "scripts": {

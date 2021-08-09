@@ -13,10 +13,18 @@ module.exports = {
     },
 
     getRewards: async () => {
-        let response = await axios.get(constants.REWARDS_ENDPOINT, {
-            headers: {'project_id': constants.BLOCKFROST_API_KEY}
-        });
-        return response.data;
+        let result = [];
+        let hasMorePages = true;
+        let page = 1;
+        do {
+            let response = await axios.get(constants.REWARDS_ENDPOINT.replace(":page", page++), {
+                headers: {'project_id': constants.BLOCKFROST_API_KEY}
+            });
+            hasMorePages = response.data.length == 100;
+            result.push(...response.data);
+        } while (hasMorePages);
+
+        return result;
     },
 
     getBalance: async () => {
@@ -28,36 +36,49 @@ module.exports = {
 
     getMyAddresses: async () => {
         console.log("Loading my addresses...")
-        let response = await axios.get(constants.ADDRESSES_ENDPOINT, {
-            headers: {'project_id': constants.BLOCKFROST_API_KEY}
-        })
-        return response.data.map(d => d.address);
+        let result = [];
+        let hasMorePages = true;
+        let page = 1;
+
+        do {
+            let response = await axios.get(constants.ADDRESSES_ENDPOINT.replace(":page", page++), {
+                headers: {'project_id': constants.BLOCKFROST_API_KEY}
+            })
+            hasMorePages = response.data.length == 100;
+            result.push(...response.data);
+        } while (hasMorePages);
+        return result.map(d => d.address);
     },
 
     getTransactions: async () => {
         let addresses = await module.exports.getMyAddresses();
         
         console.log("Finding my transactions...")
-        let transactions = [];
+        let result = [];
 
         for (let addr of addresses) {
-            let response = await axios.get(constants.TRANSACTIONS_ENDPOINT.replace(":addr", addr), {
-                headers: {'project_id': constants.BLOCKFROST_API_KEY}
-            });
+            let hasMorePages = true;
+            let page = 1;
 
-            response.data.forEach(o => console.log(o));
+            do {
+                let response = await axios.get(constants.TRANSACTIONS_ENDPOINT.replace(":addr", addr).replace(":page", page++), {
+                    headers: {'project_id': constants.BLOCKFROST_API_KEY}
+                });
 
-            response.data.forEach(utxo => utxo.amount.forEach( a => 
-                transactions.push({
-                    "block": utxo.block, 
-                    "unit": a.unit, 
-                    "amount": a.quantity,
-                    "amount_num": parseInt(a.quantity) / 1000000
-                })
-            ));
+                hasMorePages = response.data.length == 100;
+
+                response.data.forEach(utxo => utxo.amount.forEach( a => 
+                    result.push({
+                        "block": utxo.block, 
+                        "unit": a.unit, 
+                        "amount": a.quantity,
+                        "amount_num": parseInt(a.quantity) / 1000000
+                    })
+                ));
+            } while (hasMorePages);
         }
 
-        return transactions;
+        return result;
     },
 
     getPoolData: async (poolId) => {
