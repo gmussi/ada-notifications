@@ -105,7 +105,7 @@ module.exports = {
                 headers: {'project_id': constants.BLOCKFROST_API_KEY}
             });
             hasMorePages = response.data.length == 100;
-            poolData.delegators.push(...response.data);
+            poolData.delegators.push(...response.data.map(d => d.address));
         } while (hasMorePages);
         
         return poolData;
