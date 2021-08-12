@@ -11,7 +11,6 @@ You receive notifications when:
 * [x] Your pool loses delegates
 * [x] Your pool changes the tax fee
 
-
 ## Usage
 
 This script is meant to be run as part of a cron job. An `.env` file must be provided with all the properties as listed below. The file `.env.example` provides the best way to get started.

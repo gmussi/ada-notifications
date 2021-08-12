@@ -91,8 +91,23 @@ module.exports = {
         //get pool metadata
         response = await axios.get(constants.STAKE_POOL_META_ENDPOINT.replace(":poolId", poolId), {
             headers: {'project_id': constants.BLOCKFROST_API_KEY}
-        })
+        });
 
-        return Object.assign(poolData, response.data);
+        poolData = Object.assign(poolData, response.data);
+
+        // get pool delegators
+        poolData.delegators = [];
+        let hasMorePages = true;
+        let page = 1;
+
+        do {
+            response = await axios.get(constants.STAKE_POOL_DELEGATORS_ENDPOINT.replace(":poolId", poolId).replace(":page", page++), {
+                headers: {'project_id': constants.BLOCKFROST_API_KEY}
+            });
+            hasMorePages = response.data.length == 100;
+            poolData.delegators.push(...response.data);
+        } while (hasMorePages);
+        
+        return poolData;
     }
 };

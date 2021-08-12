@@ -9,6 +9,7 @@ let rewardsdb;
 let balancedb;
 let transactionsdb;
 let pooldb;
+let delegatorsdb;
 
 const onNewReward = async (reward) => {
     console.log("inserting new reward: ", JSON.stringify(reward));
@@ -64,6 +65,7 @@ const initMongo = async () => {
     balancedb = mongodb.collection("balance");
     transactionsdb = mongodb.collection("transactionsdb");
     pooldb = mongodb.collection("pool");
+    delegatorsdb = mongodb.collection("delegators");
 }
 
 const checkRewards = async () => {
@@ -128,10 +130,17 @@ const checkPoolChanges = async (poolId) => {
             shouldCreateRecord = true;
         }
 
-        // check if number of delegators changes
-        if (pool.live_delegators != poolData.live_delegators) {
-            await emails.sendDelegatorsChangedEmail(pool.live_delegators, poolData.live_delegators);
+        // check for newly joined and departed delegators
+        let prevDelegators = pool.delegators;
+        let newDelegators = poolData.delegators;
+
+        poolData.lostDelegators = prevDelegators.filter(x => !newDelegators.includes(x));
+        poolData.wonDelegators = newDelegators.filter(x => !prevDelegators.includes(x));
+        
+        // check if delegators were won or lost
+        if (poolData.lostDelegators.length > 0 || poolData.wonDelegators.length > 0) {
             shouldCreateRecord = true;
+            await emails.sendDelegatorsChangedEmail(poolData.lostDelegators.length, poolData.wonDelegators.length);
         }
     } else {
         // Pool has changed. Notify the user 

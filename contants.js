@@ -29,6 +29,7 @@ module.exports = Object.freeze({
     DELEGATIONS_ENDPOINT : `${BLOCKFROST_ENDPOINT}/accounts/${ADA_STAKE_KEY}/delegations`,
     STAKE_POOL_ENDPOINT : `${BLOCKFROST_ENDPOINT}/pools/:poolId`,
     STAKE_POOL_META_ENDPOINT : `${BLOCKFROST_ENDPOINT}/pools/:poolId/metadata`,
+    STAKE_POOL_DELEGATORS_ENDPOINT : `${BLOCKFROST_ENDPOINT}/pools/:poolId/delegators?page=:page`,
     TRANSACTIONS_ENDPOINT: `${BLOCKFROST_ENDPOINT}/addresses/:addr/utxos?page=:page`,
     EPOCHS_URL : `${BLOCKFROST_ENDPOINT}/epochs`,
     LATEST_EPOCH_URL : `${BLOCKFROST_ENDPOINT}/epochs/latest`,

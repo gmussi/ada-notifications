@@ -76,18 +76,14 @@ module.exports = {
         }
     },
 
-    sendDelegatorsChangedEmail: async (oldDelegators, newDelegators) => {
+    sendDelegatorsChangedEmail: async (lostDelegators, wonDelegators) => {
         try {
             let info = await transporter.sendMail({
                 from: `Ada Script <${constants.EMAIL_FROM}>`,
                 to: constants.EMAIL_TO,
-                subject: 
-                    oldDelegators > newDelegators ?
-                    `Your pool lost ${oldDelegators - newDelegators} delegators and has ${newDelegators} delegators now` :
-                    `Your pool gained ${newDelegators - oldDelegators} delegators and has ${newDelegators} delegators now`
-                ,
-                text: JSON.stringify({oldDelegators, newDelegators}),
-                html: JSON.stringify({oldDelegators, newDelegators})
+                subject: `Your pool lost ${lostDelegators} and won ${wonDelegators} delegators`,
+                text: JSON.stringify({lostDelegators, wonDelegators}),
+                html: JSON.stringify({lostDelegators, wonDelegators})
             });
     
             console.log("Email sent", JSON.stringify(info));
