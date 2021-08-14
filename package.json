@@ -10,7 +10,10 @@
   "keywords": [
     "cardano",
     "ada",
-    "blockchain"
+    "blockchain",
+    "notification",
+    "push",
+    "alarm"
   ],
   "author": "Guilherme Mussi <gmussi@gmail.com>",
   "license": "MIT",
